@@ -1,11 +1,18 @@
 module.exports = function(app) {
-    var todoList = require('../Controller/Controller');
+    const todoList = require('../Controller/Controller');
+     const isAuth=require('../Middleware/isAuth')
+    
    
      app.route('/Singup')
     .get(todoList.get_a_data)
-    .post(todoList.create_a_data);
+    .post(todoList.signup);
 
-    app.route('/tasks/:taskId')
+    app.route('/Signin')
+    .get(todoList.userSignin,isAuth);
+    
+    
+
+    app.route('/Singup/:SingupId')
     .get(todoList.read_a_task)
     .put(todoList.update_a_task)
     .delete(todoList.delete_a_task);
