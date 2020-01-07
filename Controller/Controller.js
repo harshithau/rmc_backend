@@ -31,7 +31,8 @@ exports. signup= function(req, res){
     res.send('Mobile number is invalid');
   }
   if(reg_email.test(req.body.email)){
-    UserData.find({email: req.body.email},function(err, data){
+    UserData.find({email: req.body.email},
+      function(err, data){
       if(data != null && data != ''){
         res.send('User already exists');
       }
