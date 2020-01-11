@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const UserData =require('../Model/Model');
+const UserData =require('../Model/SignUp_Model');
 const bcrypt =require('bcrypt');
 const jwt = require('jsonwebtoken');
 var isAuth=require('../Middleware/isAuth')
@@ -45,7 +45,7 @@ exports. signup= function(req, res){
             userData.save(function(err, data){
               if(err)
                 res.send(err.message);
-              res.json('User Created Succesfully');
+              res.json(data);
             })
           })
         })
