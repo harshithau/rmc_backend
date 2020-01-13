@@ -1,73 +1,136 @@
-// const mongoose = require('mongoose');
-// const AdminData =require('../Model/Admin_model');
+const volunteerModel = require('../Model/volunteersModel');
+const marketModel = require('../Model/Marketmodule');
+const productModel = require('../Model/productsmodule')
 
-// exports.get_Product = function(req, res) {
-//     AdminData.find({}, function(err, task1) {
-// if (err)
-// res.send(err);
-// res.json(task1);
-// });
-// };
+exports.markets = (req, res, next) => {
+    const market = new marketModel({
+        marketName: req.body.marketName,
+      
+    })
+    return market.save()
+      .then(result => {
+        res.status(200).json({
+          message: "Markets created",
+          market_id: result._id
+  
+        })
+      })
+  }
+exports.volunteers = (req, res, next) => {
+    const volun = new volunteerModel({
+        marketId:req.body.marketId,
+        volunteerName: req.body.volunteerName,
+      
+    })
+    return volun.save()
+      .then(result => {
+        res.status(200).json({
+          message: "Volunteers created",
+          volunteer_id: result._id
+  
+        })
+      })
+  }
+//   exports.getallVolunteers = (req, res, next) => {
+//     debugger;
+//     volunteerModel.find({} )
+//       .then(result => {
+//         res.status(200).json({
+//           message: 'give market vulunteers',
+//           result: result
+//         })
+//       })
+//       .catch(err => {
+//         if (!err.statusCode) {
+//           err.statusCode = 500;
+//         }
+//         next(err);
+//       });
+//   }
+  exports.getVolunByMrktId = (req, res, next) => {
+    debugger;
+    volunteerModel.find({marketId: { $in: req.params.marketId1 }})
+      .then(result => {
+        res.status(200).json({
+          message: 'give market vulunteers',
+          result: result
+        })
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+  }
+  exports.getSingleVolunByMrktId = (req, res, next) => {
+    debugger;
+    volunteerModel.find({})
+      .then(result => {
+        res.status(200).json({
+          message: 'give single vulunteers',
+          result: result
+        })
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+  }
+  exports.products = (req, res, next) => {
+    const product = new productModel({
+        volunteersId: req.body.volunteersId,
+        productName: req.body.productName,
+        productWeight: req.body.productWeight,
+        Amount: req.body.Amount
 
-
-// exports.productname = function(req, res) {console.log(req.body)
-// var AdminData = new AdminData(req.body);
-// AdminData.save(function(err, task1) {
-// if (err)
-// res.send(err);
-// res.json(task1);
-// });
-// };
-
-
-const mongoose = require('mongoose');
-const UserData =require('../Model/Admin_model');
-const bcrypt =require('bcrypt');
-const jwt = require('jsonwebtoken');
-var isAuth=require('../Middleware/isAuth')
-
-
-exports.get_a_data = function(req, res) {
-UserData.find({}, function(err, task2) {
-if (err)
-res.send(err);
-res.json(task2);
-});
-};
-
-
-
-exports.update_a_task = function(req, res)
-{
-var User = new UserData(req.body);
-User.save({},function(err, data) {
-if (err)
-res.send(err);
-res.json(data);
-});
-};
-
-// exports.delete_a_task = function(req, res) {
-// UserData.remove({_id: req.params.taskId}, function(err, task) {
-// if (err)
-// res.send(err);
-// res.json({ message: 'Task successfully deleted' });
-// });
-// };
-
-// exports.read_a_task = function(req, res)
-// {
-// UserData.findById(req.params.taskId, function(err, task) {
-// if (err)
-// res.send(err);
-// res.json(task);
-// });
-// };
-
-
-
-
-
-
-
-
+    })
+    return product.save()
+      .then(result => {
+        res.status(200).json({
+          message: "Products successfully added",
+          product_id: result._id
+        })
+      })
+  }
+  exports.getProductsByVolunId = (req, res, next) => {
+    debugger;
+    productModel.find({volunteersId: { $in: req.params.volunteersId1 }})
+      .then(result => {
+        res.status(200).json({
+          message: 'Give product details based on volunteers',
+          result: result
+        })
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+  }
+  exports.getProductsDetails = (req, res, next) => {
+    debugger;
+    productModel.find({})
+      .then(result => {
+        res.status(200).json({
+          message: 'Give all product details ',
+          result: result
+        })
+      })
+      .catch(err => {
+        if (!err.statusCode) {
+          err.statusCode = 500;
+        }
+        next(err);
+      });
+  }
+  exports.getallVolunteers = function(req, res) {
+    volunteerModel.find({}, function(err, task) {
+    if (err)
+    res.send(err);
+    res.json(task);
+    });
+    };

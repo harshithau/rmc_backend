@@ -3,7 +3,6 @@ var app = express();
  var port = process.env.PORT || 4013;
  var mongoose = require('mongoose');
  var Task = require('./Model/SignUp_Model');
- var Task1 = require('./Model/Admin_model');
 
  
  var bodyParser = require('body-parser');
