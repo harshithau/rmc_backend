@@ -15,7 +15,7 @@ exports.get_a_data = function(req, res) {
 exports. signup= function(req, res){
   const reg_email=/^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/;
   const reg_mob=/^[0-9]{10}$/;
-  const reg_pwd=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{4,8}$/;
+  const reg_pwd=/^[@#][A-Za-z0-9]{9,11}$/;
   if(!reg_pwd.test(req.body.password)){
     console.log(req.body.password)
     res.send('password is invalid');
@@ -91,17 +91,18 @@ exports.userSignin = (req,res,next) =>{
   UserData.findOne({Mobnum: Mobnum})
   .then(user =>{
     if(!user){
-      const error = new Error('A user with this mobile number could not be found.');
+      const error = new Error('User does not exist');
       error.statusCode = 401;
       throw error;
     
     }
     loadedUser = user;
+    console.log(bcrypt.compare(password,user.password))
     return bcrypt.compare(password,user.password);
   })
   .then(isEqual =>{
     if(!isEqual){
-      const error = new Error('wrong password.');
+      const error = new Error('wrong password');
       error.statusCode = 401;
       throw error;
     }

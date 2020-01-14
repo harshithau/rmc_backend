@@ -9,7 +9,7 @@ module.exports = function(app) {
     .post(todoList.signup);
 
     app.route('/Signin')
-    .get(todoList.userSignin);
+    .post(todoList.userSignin);
     
     
 
@@ -27,6 +27,8 @@ module.exports = function(app) {
     app.get('/getbyVolunteerId/:volunteersId1', AdminController.getProductsByVolunId);
     app.post('/products', AdminController.products); 
     app.get('/allproducts', AdminController.getProductsDetails);
+    app.get('/getallProductDetails', AdminController.getallProductDetails);
+    
 };
 
 

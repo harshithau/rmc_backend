@@ -134,3 +134,10 @@ exports.volunteers = (req, res, next) => {
     res.json(task);
     });
     };
+    exports.getallProductDetails = function(req, res) {
+      productModel.find({}, function(err, task) {
+      if (err)
+      res.send(err);
+      res.json(task);
+      });
+      };
