@@ -27,6 +27,11 @@ email:{
 Mobnum:{
     type: Number,
     required: true
+},
+role:{
+    type:String,
+    default:"user"
+
 }
 
 

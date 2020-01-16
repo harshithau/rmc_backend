@@ -108,10 +108,11 @@ exports.userSignin = (req,res,next) =>{
     }
     const token = jwt.sign(
     {
+      role: loadedUser.role,
       Mobnum: loadedUser.Mobnum,
       userId:loadedUser._id.toString()
     },'secret')
-    return res.status(200).json({token: token, userId: loadedUser._id.toString(), Mobnum: loadedUser.Mobnum})
+    return res.status(200).json({token: token, userId: loadedUser._id.toString(), role: loadedUser.role,})
   })
   .catch(err => {
     if (!err.statusCode) {
