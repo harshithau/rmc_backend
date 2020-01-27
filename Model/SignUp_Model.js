@@ -30,10 +30,9 @@ Mobnum:{
 },
 role:{
     type:String,
-    default:"user"
-
+    default:null
+    
 }
-
 
 });
 

@@ -1,6 +1,7 @@
 module.exports = function(app) {
     const todoList = require('../Controller/Signup_Controller');
     const AdminController = require('../Controller/Admincontroller');
+   const userController = require('../Controller/Signup_Controller');
     
     
    
@@ -17,6 +18,12 @@ module.exports = function(app) {
     .get(todoList.read_a_task)
     .put(todoList.update_a_task)
     .delete(todoList.delete_a_task);
+
+   app.route('/reset')
+  .put(userController.changepassword)
+
+
+
 
 
     app.post('/markets', AdminController.markets);
