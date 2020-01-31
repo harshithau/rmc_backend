@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const UserData =require('../Model/SignUp_Model');
-const bcrypt =require('bcrypt');
+const bcrypt =require('bcryptjs');
 const jwt = require('jsonwebtoken');
-var isAuth=require('../Middleware/isAuth')
+var isAuth=require('../Middleware/isAuth');
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
     
 
 exports.get_a_data = function(req, res) {
@@ -13,7 +15,9 @@ exports.get_a_data = function(req, res) {
   });
 };
 exports.changepassword = (req, res)=> {
-  console.log(req.body)
+  console.log(req.body);
+  const pwd = cryptr.encrypt(req.body.password);
+req.body.password = pwd;
   UserData.findOneAndUpdate({email: req.body.email}, req.body, {new: true}, function(err, task) {
   if (err)
   res.send(err);
@@ -105,7 +109,8 @@ exports.userSignin = (req,res,next) =>{
     
     }
     loadedUser = user;
-    return (password===user.password?true:false)
+    const pwd = cryptr.decrypt(user.password)
+    return (password=== pwd)
     // return bcrypt.compare(password,user.password);
   })
   .then(isEqual =>{
